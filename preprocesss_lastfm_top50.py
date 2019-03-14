@@ -8,13 +8,14 @@ Created on Thu Mar 14 14:11:07 2019
 
 import pandas as pd
 import numpy as np
-from tqdm import tqdm, trange
+from tqdm import trange
 
 LASTFM_FILEPATH = './data/final_mapping.json'
 OUTPUT_FILEPATH1 = './data/lastfm_top50_tagmtx.npy'
 OUTPUT_FILEPATH2 = './data/lastfm_top50_featmtx.npy'
 OUTPUT_FILEPATH3 = './data/lastfm_top50_track_ids.npy'
 OUTPUT_FILEPATH4 = './data/lastfm_top50_tag_avail_cnt.npy'
+SAVED_SCALER_FILEPATH = './data/std_scaler.sav'
 
 TOP50A = ['rock', 'pop', 'alternative', 'indie', 'favorites', 'female vocalists',
           'Love', 'alternative rock', 'electronic', 'beautiful', 'jazz', '00s',
@@ -79,10 +80,18 @@ feat_mtx = feat_mtx[tag_avail_cnt!=0,:]
 track_ids = track_ids[tag_avail_cnt!=0]
 
 
+# Feature normalization
+import pickle
+#from sklearn.preprocessing import StandardScaler
+
+scaler = pickle.load(open(SAVED_SCALER_FILEPATH, 'rb'))
+feat_mtx_new = scaler.fit_transform(feat_mtx)
+feat_mtx_new[:,15] = feat_mtx[:,15]
 
 # Save results as .npy
 np.save(OUTPUT_FILEPATH1, tag_mtx)
-np.save(OUTPUT_FILEPATH2, feat_mtx)
+#np.save(OUTPUT_FILEPATH2, feat_mtx)
+np.save(OUTPUT_FILEPATH2, feat_mtx_new)
 np.save(OUTPUT_FILEPATH3, track_ids)
 np.save(OUTPUT_FILEPATH4, tag_avail_cnt)
     
