@@ -33,6 +33,9 @@ _dict = {'major': 1, 'minor': 0}
 df=pd.read_json(LASTFM_FILEPATH)
 num_items = len(df)
 
+# Shuffle (we can split train/test later)
+df = df.sample(frac=1).reset_index(drop=True)
+
 
 # Create an empty result matrix
 tag_mtx = np.zeros((num_items,50))
@@ -83,17 +86,17 @@ track_ids = track_ids[tag_avail_cnt!=0]
 # Feature normalization
 import pickle
 #from sklearn.preprocessing import StandardScaler
-
 scaler = pickle.load(open(SAVED_SCALER_FILEPATH, 'rb'))
 feat_mtx_new = scaler.fit_transform(feat_mtx)
 feat_mtx_new[:,15] = feat_mtx[:,15]
 
+
 # Save results as .npy
-np.save(OUTPUT_FILEPATH1, tag_mtx)
-#np.save(OUTPUT_FILEPATH2, feat_mtx)
-np.save(OUTPUT_FILEPATH2, feat_mtx_new)
+np.save(OUTPUT_FILEPATH1, tag_mtx.astype(np.int8))
+#np.save(OUTPUT_FILEPATH2, feat_mtx.astype(np.int8))
+np.save(OUTPUT_FILEPATH2, feat_mtx_new.astype(np.float32))
 np.save(OUTPUT_FILEPATH3, track_ids)
-np.save(OUTPUT_FILEPATH4, tag_avail_cnt)
+np.save(OUTPUT_FILEPATH4, tag_avail_cnt.astype(np.int8))
     
             
             
