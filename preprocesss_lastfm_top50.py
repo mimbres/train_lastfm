@@ -72,9 +72,9 @@ print('max available tags =', np.max(tag_avail_cnt), '\n',
 
 '''
 max available tags = 31.0 
- avg available tags = 4.705301775916366 
- items with top50 unavailable = 38595 
- items with top50 available = 123204
+avg available tags = 4.705301775916366 
+items with top50 unavailable = 38595 
+items with top50 available = 123204
 '''
 
 # Reduce top50 unavailable items

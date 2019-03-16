@@ -22,8 +22,29 @@ TOP50A = ['rock', 'pop', 'alternative', 'indie', 'favorites', 'female vocalists'
           'acoustic', 'electronica', '70s', 'Favourites', 'Hip-Hop', 'experimental',
           'easy listening', 'female vocalist', 'ambient', 'punk rock', 'funk', 'hardcore']
 ```     
-* (Load ./data/*.json) --> (Shuffle) --> (Check availability of top50 tags) --> (Reduce Unavailable items) --> (save as ./data/*.npy)
+* Procedure:
+```
+(Load ./data/*.json) --> (Shuffle) --> (Check availability of top50 tags) --> (Reduce Unavailable items) --> (Normalization)--> (save as ./data/*.npy)
+```
+
+* Output:
+```
+max available tags = 31.0 
+avg available tags = 4.705301775916366 
+items with top50 unavailable = 38,595 
+items with top50 available = 123,204
+```
 
 
 ## Model
-* TBA
+* MLP-regressor:
+```
+(in)--|Linear|--|ReLU|--|Linear|--(embedding output)--|Linear|--(MSE loss)
+```
+- TODO: 
+    - testing residual-block
+    - still unsure of proper learning rate and output normalization..
+* Classifier:
+- TBA
+
+
